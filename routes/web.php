@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +17,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home', ['name' => 'Home']);
+    return view('home', [
+        'title' => 'Home'
+    ]);
 });
 
-Route::get('/posts', function () {
-    return view('posts', ['name' => 'Posts']);
-});
+
+
+
+
+
+
+Route::get('/posts', [PostController::class, 'index']);
+
 Route::get('/about', function () {
-    return view('about', ['name' => 'About']);
+    return view(
+        'about',
+        [
+            'title' => 'About',
+            'name' => 'Rizky saria',
+            'email' => 'muhammatsaria026@student.unsrat.ac.id',
+            'image' => 'ppriski.jpg'
+        ]
+    );
 });
 Route::get('/contact', function () {
-    return view('contact', ['name' => 'Contact']);
+    return view('contact', ['title' => 'Contact']);
 });
+
+
+// halaman single post
+Route::get('posts/{slug}', [PostController::class, 'show']);

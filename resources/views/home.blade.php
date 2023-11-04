@@ -3,5 +3,5 @@
 
 
 @section('main')
-    <h1>Tulisan Aneh | {{ $name }}</h1>  
+    <h1>Tulisan Aneh | {{ $title }}</h1>  
 @endsection
