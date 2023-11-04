@@ -2,7 +2,10 @@
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -16,34 +19,12 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('home', [
-        'title' => 'Home'
-    ]);
-});
-
-
-
-
-
-
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/posts', [PostController::class, 'index']);
 
-Route::get('/about', function () {
-    return view(
-        'about',
-        [
-            'title' => 'About',
-            'name' => 'Rizky saria',
-            'email' => 'muhammatsaria026@student.unsrat.ac.id',
-            'image' => 'ppriski.jpg'
-        ]
-    );
-});
-Route::get('/contact', function () {
-    return view('contact', ['title' => 'Contact']);
-});
+Route::get('/about', [AboutController::class, 'index']);
+Route::get('/contact', [ContactController::class, 'index']);
 
 
 // halaman single post
