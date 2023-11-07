@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view(
             'posts',
             [
@@ -17,12 +18,13 @@ class PostController extends Controller
         );
     }
 
-    public function show($slug){
+    public function show(Post $post)
+    {
         return view(
             'post',
             [
                 'title' => "single-title",
-                'post' => Post::find($slug)
+                'post' => $post
             ]
         );
     }
