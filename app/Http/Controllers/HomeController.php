@@ -9,7 +9,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('home', [
-            'title' => 'Home'
+            'main_title' => "Tulisan Aneh",
+            'title' => 'Home',
+            'active' => 'home'
         ]);
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Category;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,28 +23,26 @@ use App\Models\Category;
 |
 */
 
+
 Route::get('/', [HomeController::class, 'index']);
 
+// All post and All post by author and by category
 Route::get('/posts', [PostController::class, 'index']);
-
 Route::get('/about', [AboutController::class, 'index']);
 Route::get('/contact', [ContactController::class, 'index']);
 
-
-// halaman single post
+// single post
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('categories/{category:slug}', function (Category $category) {
-    return view('category', [
-        'title' => $category->name,
-        'posts' => $category->posts,
-        'category' => $category->name
-    ]);
-});
+// list category
+Route::get('categories/', [CategoriesController::class, 'index']);
 
-Route::get('categories/', function () {
-    return view('categories', [
-        'title' => "Post Categories",
-        'categories' => Category::all()
-    ]);
-});
+// list author
+Route::get('authors/', [AuthorController::class, 'index']);
+
+// login
+Route::get('/login', [LoginController::class, 'index']);
+
+// registration
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'store']);

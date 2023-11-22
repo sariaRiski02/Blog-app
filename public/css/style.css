@@ -1,0 +1,48 @@
+
+body {
+    --sb-track-color: #cacaca;
+    --sb-thumb-color: #020202;
+    --sb-size: 13px;
+  
+    scrollbar-color: var(--sb-thumb-color) 
+                     var(--sb-track-color);
+  }
+  
+  body::-webkit-scrollbar {
+    width: var(--sb-size) 
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 50px;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 50px;
+    border: 1px solid #0b0f10;
+    }
+
+
+    /* login */
+    
+    .form-signin .form-floating:focus-within {
+      z-index: 2;
+    }
+    
+    .form-signin input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    
+    .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .form-register input{
+      border-radius: 0;
+      margin-bottom: -1px;
+    }
