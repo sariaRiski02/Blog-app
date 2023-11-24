@@ -28,6 +28,33 @@
       </ul>
 
       <ul class="nav nav-underline pb-3 pt-3">
+
+        @auth
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Selamat Datang, {{ auth()->user()->name }}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-house-door"></i> Dasboard</a></li>
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+              <form action="/logout" method="post">
+                @csrf
+
+              <button class="dropdown-item" type="submit">
+                <i class="bi bi-box-arrow-left"></i> Logout
+              </button>
+
+              </form>
+            </li>
+          </ul>
+        </li>
+
+        
+        @else
+        
         <li class="nav-item">
           <a href="/login" class="nav-link text-decoration-none text-dark fw-bold {{ $active == "login" ? "active" : "text-black" }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
@@ -37,6 +64,9 @@
           Login
         </a>
         </li>
+
+
+        @endauth
       </ul>
 
     </div>
