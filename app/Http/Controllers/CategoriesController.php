@@ -13,7 +13,6 @@ class CategoriesController extends Controller
     {
         return view('categories', [
             'title' => "Categories",
-            'active' => "categories",
             'items' => Category::all()
         ]);
     }

@@ -14,7 +14,6 @@ class AboutController extends Controller
             'about',
             [
                 'title' => 'About',
-                'active' => 'about',
                 'name' => 'Rizky saria',
                 'email' => 'muhammatsaria026@student.unsrat.ac.id',
                 'image' => 'ppriski.jpg'

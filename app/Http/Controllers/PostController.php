@@ -29,7 +29,6 @@ class PostController extends Controller
             [
                 'main_title' => "All Posts" . $title,
                 'title' => 'Posts',
-                'active' => 'posts',
                 'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->simplePaginate(7)->withQueryString()
             ]
         );
@@ -41,7 +40,6 @@ class PostController extends Controller
             'post',
             [
                 'title' => "single-post",
-                'active' => 'posts',
                 'post' => $post
             ]
         );
