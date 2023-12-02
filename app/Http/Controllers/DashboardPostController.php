@@ -28,8 +28,10 @@ class DashboardPostController extends Controller
     public function create()
     {
         return view(
+
             'dashboard.posts.create',
             ['categories' => Category::all()]
+
         );
     }
 
@@ -46,9 +48,11 @@ class DashboardPostController extends Controller
         ]);
 
         $validated['user_id'] = auth()->user()->id;
-        $validated['excerpt'] = str::limit($request['body'], 200, '...');
+        $validated['excerpt'] = str::limit(strip_tags($request['body']), 200, '...');
 
-        return $validated['user_id'] . ' ' . $validated['excerpt'];
+        Post::create($validated);
+
+        return redirect('/dashboard/posts')->with('success', 'New Post has been added!');
     }
 
     /**
@@ -69,7 +73,10 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('dashboard.posts.edit', [
+            'categories' => Category::all(),
+            'post' => $post
+        ]);
     }
 
     /**
@@ -77,7 +84,24 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+
+
+        if ($request->slug != $post->slug) {
+            $rules['slug'] = 'required|unique:posts';
+        }
+
+
+        $validatedData = $request->validate($rules);
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['excerpt'] = str::limit(strip_tags($request['body']), 200, '...');
+
+        Post::where('id', $post->id)->update($validatedData);
+        return redirect('/dashboard/posts')->with('success', 'post has been updated');
     }
 
     /**
@@ -85,7 +109,8 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect('/dashboard/posts')->with('success', 'post has been deleted');
     }
 
 

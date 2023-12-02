@@ -6,6 +6,17 @@
     <h1 class="h2">My Posts</h1>
 </div>
 
+@if (session()->has('success'))
+
+<div class="alert alert-success alert-dismissible fade show col-lg-8" role="alert">
+    <strong>Yeeee..!</strong> {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    
+@endif
+
+
+
 
 <div class="table-responsive small col-lg-8">
   <a href="/dashboard/posts/create" class="btn btn-primary mb-3">Create new post</a>
@@ -26,15 +37,24 @@
           <td>{{ $item->title }}</td>
           <td>{{ $item->category->name }}</td>
           <td>
+            <div class="d-flex gap-1 " style="width: 100%">
             <a href="/dashboard/posts/{{ $item->slug }}" class="btn btn-sm bg-primary">
                 <i class="bi bi-eye-fill "></i>
             </a>
-            <a href="" class="btn btn-sm bg-warning">
+            <a href="/dashboard/posts/{{ $item->slug }}/edit" class="btn btn-sm bg-warning">
                 <i class="bi bi-pencil"></i>
             </a>
-            <a href="" class="btn btn-sm bg-danger">
-                <i class="bi bi-trash"></i>
-            </a>
+
+            <form action="/dashboard/posts/{{ $item->slug }}" method="post">
+              @method('delete')
+
+              @csrf
+              <button  class="btn btn-sm bg-danger" onclick="return confirm('Are you sure to delete this post ?')" type="submit">
+                  <i class="bi bi-trash col-1"></i>
+              </button>
+            
+            </form>
+          </div>
           </td>
         </tr>
         @endforeach
