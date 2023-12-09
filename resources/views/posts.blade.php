@@ -21,7 +21,7 @@
         
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Search.." name="search"  value="{{ request('search') }}">
-                <button class="btn btn-dark" type="submit">Button</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </div>
 
         </form>
@@ -32,8 +32,18 @@
 @if ($posts->count())
 
 
-<div class="card mb-10">
-    <img src="https://source.unsplash.com/1200x400?{{ $posts->first()->category->name }}" class="card-img-top" alt="{{ $posts->first()->category->name }}">
+<div class="card mb-10 d-flex align-items-center" >
+
+            @if ($posts->first()->image)
+
+            <div style="max-height: 400px; max-width: 1200px; overflow: hidden;">
+                <img src="{{ asset('storage/'.$posts->first()->image) }}" alt="{{ $posts->first()->category->name }}" class="img-fluid">
+
+            </div>
+            @else
+                <img src="https://source.unsplash.com/1200x400?{{ $posts->first()->category->name }}" alt="{{ $posts->first()->category->name }}" class="img-fluid" >
+            @endif
+
     <div class="card-body text-center">
       <a href="/posts/{{ $posts->first()->slug }}" class="text-decoration-none text-dark">
         <h5 class="card-title">{{ $posts->first()->title }}</h5>
@@ -52,37 +62,50 @@
       <p class="card-text">
         {{ $posts->first()->excerpt }}
      </p>
-     <a href="/posts/{{ $posts->first()->slug }}" class="btn btn-primary">Mulai Baca</a>
+     <a href="/posts/{{ $posts->first()->slug }}" class="btn btn-primary">Read more</a>
     </div>
 </div>
 
 
 <div class="container pt-3">
     <div class="row">
-        @foreach ($posts->skip(1) as $item)
+
+    @foreach ($posts->skip(1) as $item)
+    
         <div class="col-md-4 pb-3">
+
             <div class="card">
                 <div class="position-absolute px-1 py-1 " style="background-color: rgba(0,0,0,0.5)">
                     <a href="/posts?category={{ $item->category->slug }}" class="text-decoration-none text-white">
                         {{ $item->category->name }}
                     </a>
                 </div>
-                <img src="https://source.unsplash.com/400x300?{{ $item->category->name }}" class="card-img-top" alt="image">
-                <div class="card-body">
-                
+
+            @if ($item->image)
+                <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->category->name }}" class="img-fluid" >
+            @else
+                <img src="https://source.unsplash.com/1200x800?{{ $item->category->name }}" alt="{{ $item->category->name }}" class="img-fluid">
+            @endif
+
+            <div class="card-body">    
+
                     <h5 class="card-title">{{ $item->title }}</h5>
-                    <small class="text-muted">by: 
+                    <small class="text-muted">
+                        by: 
                         <a href="/posts?author={{ $item->author->username }}" class="text-decoration-none "> 
                             {{ $item->author->name }} 
-                        </a> {{ $item->created_at->diffForHumans() }}
+                        </a> 
+                        <br>
+                        {{ $item->created_at->diffForHumans() }}
                     </small>
                     <p class="card-text fs-6">{{ $item->excerpt }}</p>
-                    <a href="/posts/{{ $item->slug }}" class="btn btn-primary">Baca</a>
-                
-                </div>
+                    <a href="/posts/{{ $item->slug }}" class="btn btn-primary">Read more</a> 
+
+            </div>
             </div>
         </div>
-        @endforeach
+
+    @endforeach
 
     </div>
 </div>

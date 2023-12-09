@@ -20,9 +20,23 @@
             </form>
 
             <br>
+
+            @if ($post->image)
+
+            <div style="max-height: 500px; overflow:hidden;">
+            <img src="{{ asset('storage/'.$post->image) }}" alt="{{ $post->category->name }}" class="img-fluid mt-3">
+        </div>
+            
+
+            @else
+            
             <img src="https://source.unsplash.com/1200x400?{{ $post->category->name }}" alt="{{ $post->category->name }}" class="img-fluid mt-3">
-        <article>{!! $post['body'] !!}</article>
-        <a href="/posts" class="btn btn-primary btn-sm" class="full-width">Kembali</a>
+
+            @endif
+
+
+
+        <article class="mb-3">{!! $post['body'] !!}</article>
 
     </div>
 </div>

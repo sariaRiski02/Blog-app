@@ -46,7 +46,7 @@ Route::get('authors/', [AuthorController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-// Logut
+// Logout
 Route::post('/logout', [LoginController::class, 'logout']);
 
 // registration

@@ -16,9 +16,14 @@
                     {{ $post->category->name }}
                 </a>
                 <br>
-                <img src="https://source.unsplash.com/1200x400?{{ $post->category->name }}" alt="{{ $post->category->name }}" class="img-fluid">
+
+
+                @if ($post->image)
+                <img src="{{ asset('storage/'.$post->image) }}" alt="{{ $post->category->name }}" class="img-fluid" style="max-height: 800px; max-width: 1200; overflow:hidden;">
+                @else
+                <img src="https://source.unsplash.com/1200x800?{{ $post->category->name }}" alt="{{ $post->category->name }}" class="img-fluid">
+                @endif
             <article>{!! $post['body'] !!}</article>
-            <a href="/posts" class="btn btn-primary btn-sm" class="full-width">Kembali</a>
 
         </div>
     </div>
