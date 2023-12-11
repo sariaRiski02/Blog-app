@@ -29,6 +29,28 @@
         </ul>
 
 
+        @can('isAdmin')
+            
+        
+        <h6 class="sidebar-heading d-flex justify-content-between align-content-center px-3 mt-4 mb-1 text-muted">ADMINISTRATOR</h6>
+
+
+        <ul class="nav flex-column">
+
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('/dashboard/categories*') ? 'active' : 'text-black' }}" href="/dashboard/categories">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-1x2" viewBox="0 0 16 16">
+                <path d="M6 1H1v14h5zm9 0h-5v5h5zm0 9v5h-5v-5zM0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1zm1 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1z"/>
+              </svg>
+              <span>
+                Post Categories
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        @endcan
+
         <hr class="my-3">
 
         <ul class="nav flex-column mb-auto">
