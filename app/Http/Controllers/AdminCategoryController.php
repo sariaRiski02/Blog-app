@@ -25,7 +25,6 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -33,7 +32,32 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|max:100'
+        ];
+
+
+
+        foreach (Category::all() as $item) {
+            if (strtolower($item->name) === $request['addCategory']) {
+
+                return redirect('/dashboard/categories')->with([
+                    'message' => 'Category has been already exist',
+                    'feedback' => 'danger',
+                    'mainText' => 'Oh No..'
+
+                ]);
+            }
+        }
+
+        $validated = $request->validate($rules);
+        Category::create($validated);
+
+        return redirect('/dashboard/categories')->with([
+            'message' => 'Category has been Created',
+            'feedback' => 'success',
+            'mainText' => 'Yeee...'
+        ]);
     }
 
     /**
