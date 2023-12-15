@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AdminCategoryController extends Controller
 {
@@ -32,9 +33,21 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'name' => 'required|max:100'
-        ];
+
+
+
+        $validatedData = $request->validate([
+            'name' => ["required", "max:100"],
+            'slug' => ['required', 'unique:categories']
+        ]);
+
+        Category::create($validatedData);
+
+        return redirect('/dashboard/categories')->with([
+            'message' => 'Category has been Created',
+            'feedback' => 'success',
+            'mainText' => 'Yeee...'
+        ]);
 
 
 
@@ -49,15 +62,6 @@ class AdminCategoryController extends Controller
                 ]);
             }
         }
-
-        $validated = $request->validate($rules);
-        Category::create($validated);
-
-        return redirect('/dashboard/categories')->with([
-            'message' => 'Category has been Created',
-            'feedback' => 'success',
-            'mainText' => 'Yeee...'
-        ]);
     }
 
     /**
@@ -65,7 +69,6 @@ class AdminCategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
     }
 
     /**
@@ -73,15 +76,29 @@ class AdminCategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('dashboard.categories.index', [
+            'category' => $category,
+            'categories' => Category::all()
+        ]);
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $rules = [
+            'name' => 'required|max:100',
+            'slug' => 'required|unique:categories'
+        ];
+
+        $validatedData = $request->validate($rules);
+        Category::where('id', $category->id)->update($validatedData);
+
+        return redirect('dashboard/categories')->with([
+            'message' => 'Category has been updated',
+            'feedback' => 'success',
+            'mainText' => 'Yee..'
+        ]);
     }
 
     /**
@@ -89,6 +106,21 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+
+        Category::destroy($category->id);
+
+        return redirect('/dashboard/categories')->with([
+            'message' => 'Category has been deleted',
+            'feedback' => 'success',
+            'mainText' => 'Yeee..'
+        ]);
+
         //
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Category::class, 'slug', $request->category);
+        return response()->json(['slug' => $slug]);
     }
 }

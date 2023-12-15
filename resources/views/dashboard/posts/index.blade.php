@@ -47,7 +47,6 @@
 
             <form action="/dashboard/posts/{{ $item->slug }}" method="post">
               @method('delete')
-
               @csrf
               <button  class="btn btn-sm bg-danger" onclick="return confirm('Are you sure to delete this post ?')" type="submit">
                   <i class="bi bi-trash col-1"></i>
